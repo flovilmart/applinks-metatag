@@ -3,7 +3,6 @@ var buildTags = function(links) {
     for (var i in links) {
         var link = links[i];
         var platform = link.platform;
-        // delete link.platform;
         tags += '\n<meta property="al:' + platform + '">\n';
         var keys = Object.keys(link);
         for (var j in keys) {
@@ -12,8 +11,9 @@ var buildTags = function(links) {
                 tags += '<meta property="al:' + platform + ":" + key + '" content="' + link[key] + '">\n';
             }
         }
-        return tags;
+        
     }
+    return tags;
 };
 
 var injectMetaOptions = function(str, options) {
