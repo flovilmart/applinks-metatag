@@ -24,11 +24,12 @@ var _ = require("underscore");
 
 module.exports = function(platforms) {
     return function(req, res, next) {
+        var apps = platforms;
         if (_.isFunction(platforms)) {
-            platforms = platforms(req, res);
+            apps = platforms(req, res);
         }
-        if (!_.isArray(platforms)) {
-            platforms = [ platforms ];
+        if (!_.isArray(apps)) {
+          apps = [ apps ];
         }
         var htmlMetaHeaders = req.headers["prefer-html-meta-tags"] || "";
         var preferAppLinks = _.some(htmlMetaHeaders.split(","), function(value) {
@@ -77,7 +78,7 @@ module.exports = function(platforms) {
         res._appLinks = res._appLinks || {};
         res._appLinks.meta = res._appLinks.meta || [];
         // Render more specific meta tag first
-        res._appLinks.meta = platforms.concat(res._appLinks.meta);
+        res._appLinks.meta = apps.concat(res._appLinks.meta);
         res._appLinks.preferAppLinks = preferAppLinks;
         next();
     };
